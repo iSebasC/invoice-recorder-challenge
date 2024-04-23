@@ -43,36 +43,43 @@ Puedes encontrar información inicial para popular la DB en el siguiente enlace:
 
 Se desea poder registrar la serie, número, tipo de comprobante y moneda. Para comprobantes existentes, debería extraerse esa información a regularizar desde el campo xml_content de vouchers.
 
-### 2. Carga de comprobantes en segundo plano
+<b>Descripción</b>: Implementación de la funcionalidad para registrar y actualizar los datos de serie, número, tipo de comprobante y moneda en los comprobantes existentes.
 
-Actualmente el registro de comprobantes se realiza en primer plano, se desea que se realice en segundo plano.
-Además, en lugar de enviar una notificación por correo para informar subida de comprobantes, ahora deberá enviar dos listados de comprobantes:
-
--   Los que se subieron correctamente
--   Los que no pudieron registrarse (y la razón)
+<b>Cómo Funciona</b>: Se extrajo la información del campo xml_content de los vouchers para actualizar la base de datos con los datos requeridos.
 
 ### 3. Endpoint de montos totales
 
 Se necesita un nuevo endpoint que devuelva la información total acumulada en soles y dólares.
 
+<b>Descripción</b>: Creación de un endpoint para obtener los montos totales acumulados en soles y dólares.
+
+<b>Cómo Funciona</b>: Calcula la suma del total_amount agrupados por la moneda correspondiente.
+
+<b>Endpoint</b>: 
+
+GET /api/v1/vouchers/total-amounts: Devuelve los montos totales en PEN y USD.
+
 ### 4. Eliminación de comprobantes
 
 Se necesita poder eliminar comprobantes por su id.
+
+<b>Descripción</b>: Facilita la eliminación de comprobantes a través de su ID.
+
+<b>Cómo Funciona</b>: Elimina el comprobante especificado por su ID de la base de datos.
+
+<b>Endpoint</b>: 
+
+DELETE /api/v1/vouchers/{id}: Elimina el comprobante por ID.
 
 ### 5. Filtro en listado de comprobantes
 
 Se necesita poder filtrar en el endpoint de listado por serie, número y por un rango de fechas (que actuarán sobre las fechas de creación).
 
-**Nota**: En todos los casos de nuevas funcionalidades, se tratan de comprobantes por usuarios.
+<b>Descripción</b>: Permite filtrar los comprobantes por serie, número y rango de fechas.
 
-## Consideraciones
+<b>Cómo Funciona</b>: Utiliza parámetros de consulta para filtrar los comprobantes en la base de datos y devuelve una lista filtrada.
 
--   Se valorará el uso de código limpio, estándares, endpoints optimizados, tolerancia a fallos y concurrencia.
+<b>Endpoint</b>: 
 
-## Envío del reto
+GET /api/v1/vouchers/filter: Lista los comprobantes filtrados según los parámetros proporcionados.
 
-Deberás enviar el enlace del repositorio lo correos `administracion@idbi.pe`, `people@idbi.pe` y `product@idbi.pe`. Puedes indicar documentación de las nuevas funcionalidades o una descripción/diagramas/etc que creas necesario.
-  
-## ¿Tienes alguna duda?
-
-Puedes enviar un correo a `anthony.rosado.idbi@gmail.com` enviando tus consultas y se te responderá a la brevedad.
